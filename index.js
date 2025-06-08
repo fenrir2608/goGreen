@@ -92,4 +92,11 @@ const makeCommits = (commitDates, index = 0) => {
   });
 };
 
-makeCommits(100);
+// Generate the commit pattern and start creating commits
+console.log('🚀 Generating GitHub contribution pattern...');
+const commitDates = createCommitPattern();
+console.log(`📊 Generated ${commitDates.length} commits over the past year`);
+console.log(
+  '🎯 Pattern includes: streaks, varying intensities, and realistic work patterns'
+);
+makeCommits(commitDates);
