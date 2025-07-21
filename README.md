@@ -30,13 +30,7 @@ You'll need a few modules to get everything running smoothly. Install them all w
 - Create a JavaScript file to manage your commits.
 - Create a JSON file to store all the commit timestamp data.
 
-## Room for Improvement
 
-So, you've got the basics down. What's next?
-
-- **Custom Patterns:** Experiment with different patterns on your contribution graph. Maybe spell out your name or create some cool designs.
-- **Density Control:** Play around with the number of commits per day to adjust the shades of green.
-- **Input Strings:** Convert input strings to X-Y mapped contributions.
 
 ## npm Modules Used
 
