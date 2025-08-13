@@ -16,7 +16,7 @@ Follow these steps to bring your contribution graph to life:
 git clone https://github.com/fenrir2608/goGreen.git
 cd goGreen
 ```
-3. **Set up your project**
+2. **Set up your project**
 Initialize a new Node.js project:
 ```bash
 npm init -y
