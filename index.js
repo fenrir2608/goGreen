@@ -1,40 +1,38 @@
-import jsonfile from "jsonfile";
+import fs from "fs";
 import moment from "moment";
 import simpleGit from "simple-git";
 import random from "random";
 
 const path = "./data.json";
+const git = simpleGit();
 
-const markCommit = (x, y) => {
+if (!fs.existsSync(path)) {
+  fs.writeFileSync(path, JSON.stringify({ date: null }, null, 2) + "\n", "utf8");
+}
+
+const makeCommits = async (n) => {
+  if (n === 0) {
+    console.log("✅ All commits done. Pushing to main...");
+    await git.push("origin", "main");
+    return;
+  }
+
+  const x = random.int(0, 54); // weeks
+  const y = random.int(0, 6);  // days
   const date = moment()
     .subtract(1, "y")
     .add(1, "d")
     .add(x, "w")
     .add(y, "d")
-    .format();
+    .format("YYYY-MM-DD HH:mm:ss");
 
-  const data = {
-    date: date,
-  };
+  fs.writeFileSync(path, JSON.stringify({ date }, null, 2) + "\n", "utf8");
+  console.log("📅 Commit on:", date);
 
-  jsonfile.writeFile(path, data, () => {
-    simpleGit().add([path]).commit(date, { "--date": date }).push();
-  });
+  await git.raw(["add", path]);
+  await git.raw(["commit", "-m", date, "--date", date]);
+
+  await makeCommits(n - 1);
 };
 
-const makeCommits = (n) => {
-  if(n===0) return simpleGit().push();
-  const x = random.int(0, 54);
-  const y = random.int(0, 6);
-  const date = moment().subtract(1, "y").add(1, "d").add(x, "w").add(y, "d").format();
-
-  const data = {
-    date: date,
-  };
-  console.log(date);
-  jsonfile.writeFile(path, data, () => {
-    simpleGit().add([path]).commit(date, { "--date": date },makeCommits.bind(this,--n));
-  });
-};
-
-makeCommits(100);
+makeCommits(50).catch(console.error);
