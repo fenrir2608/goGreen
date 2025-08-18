@@ -1,19 +1,34 @@
 {
-  "name": "thomyorke",
+  "name": "gogreen",
   "version": "1.0.0",
-  "description": "nice dream",
+  "description": "Generate custom GitHub contribution patterns with fake commits",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "echo \"No test specified\" && exit 0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "github",
+    "contributions",
+    "visual-art",
+    "commit"
+  ],
+  "author": "ClearlyGG",
+  "license": "MIT",
   "dependencies": {
     "jsonfile": "^6.1.0",
     "moment": "^2.30.1",
     "random": "^4.1.0",
-    "simple-git": "^3.25.0"
-  }
+    "simple-git": "^3.28.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ClearlyGG/goGreen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ClearlyGG/goGreen/issues"
+  },
+  "homepage": "https://github.com/ClearlyGG/goGreen#readme",
+  "devDependencies": {}
 }
