@@ -6,6 +6,10 @@ import random from "random";
 const path = "./data.json";
 const git = simpleGit();
 
+// Your verified GitHub info
+const AUTHOR_NAME = "clearlygg";
+const AUTHOR_EMAIL = "clearlydevgames@gmail.com";
+
 // Ensure data.json exists
 if (!fs.existsSync(path)) {
   fs.writeFileSync(path, JSON.stringify({ date: null }, null, 2) + "\n", "utf8");
@@ -32,13 +36,23 @@ const makeCommits = async (n) => {
   fs.writeFileSync(path, JSON.stringify({ date }, null, 2) + "\n", "utf8");
   console.log("📅 Commit on:", date);
 
-  // Stage and commit only data.json with proper date
-  await git.raw(["add", path]);
-  await git.raw(["commit", "-m", date, "--date", date]);
+  // Stage the file
+  await git.add(path);
+
+  // Commit with correct author and date
+  await git.raw([
+    "commit",
+    "-m",
+    date,
+    "--date",
+    date,
+    "--author",
+    `${AUTHOR_NAME} <${AUTHOR_EMAIL}>`
+  ]);
 
   // Recurse for next commit
   await makeCommits(n - 1);
 };
 
 // Run 25 commits
-makeCommits(25).catch(console.error);
+makeCommits(75).catch(console.error);
