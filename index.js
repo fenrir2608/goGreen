@@ -23,6 +23,7 @@ const markCommit = (x, y) => {
 };
 
 const makeCommits = (n) => {
+  // if n is 0, push the commits
   if(n===0) return simpleGit().push();
   const x = random.int(0, 54);
   const y = random.int(0, 6);
@@ -37,4 +38,7 @@ const makeCommits = (n) => {
   });
 };
 
-makeCommits(100);
+
+const numCommits = parseInt(process.argv[2], 10) || 100;
+makeCommits(numCommits);
+
