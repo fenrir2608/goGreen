@@ -5,7 +5,7 @@ import random from "random";
 
 const path = "./data.json";
 
-const markCommit = (x, y) => {
+export const markCommit = (x, y, callback) => {
   const date = moment()
     .subtract(1, "y")
     .add(1, "d")
@@ -16,25 +16,23 @@ const markCommit = (x, y) => {
   const data = {
     date: date,
   };
+  
+  console.log(`Creating commit at ${x},${y} : ${date}`);
 
   jsonfile.writeFile(path, data, () => {
-    simpleGit().add([path]).commit(date, { "--date": date }).push();
+    simpleGit().add([path]).commit(date, { "--date": date }, callback);
   });
 };
 
-const makeCommits = (n) => {
-  if(n===0) return simpleGit().push();
+export const makeRandomCommits = (n) => {
+  if (n === 0) return simpleGit().push();
   const x = random.int(0, 54);
   const y = random.int(0, 6);
-  const date = moment().subtract(1, "y").add(1, "d").add(x, "w").add(y, "d").format();
-
-  const data = {
-    date: date,
-  };
-  console.log(date);
-  jsonfile.writeFile(path, data, () => {
-    simpleGit().add([path]).commit(date, { "--date": date },makeCommits.bind(this,--n));
-  });
+  
+  markCommit(x, y, () => makeRandomCommits(n - 1));
 };
 
-makeCommits(100);
+// Only run random commits if directly invoked
+if (process.argv[1] && process.argv[1].endsWith('index.js')) {
+    makeRandomCommits(100);
+}
