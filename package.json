@@ -1,7 +1,7 @@
 {
-  "name": "thomyorke",
+  "name": "go-green",
   "version": "1.0.0",
-  "description": "nice dream",
+  "description": "NodeJs script to make commits to the past (or the future) to go green on GitHub.",
   "main": "index.js",
   "type": "module",
   "scripts": {
