@@ -1,0 +1,15 @@
+{
+  "mode": "random",
+  "year": 2022,
+  "totalCommits": 3,
+  "commitDensity": {
+    "type": "random",
+    "min": 3,
+    "max": 5
+  },
+  "pattern": {
+    "enabled": false,
+    "design": "custom",
+    "coordinates": []
+  }
+}
