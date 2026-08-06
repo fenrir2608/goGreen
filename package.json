@@ -1,11 +1,11 @@
 {
-  "name": "thomyorke",
+  "name": "gogreen",
   "version": "1.0.0",
-  "description": "nice dream",
+  "description": "Interactive GitHub contribution commit generator",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --check index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +14,14 @@
     "jsonfile": "^6.1.0",
     "moment": "^2.30.1",
     "random": "^4.1.0",
-    "simple-git": "^3.25.0"
-  }
+    "simple-git": "^3.36.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fenrir2608/goGreen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fenrir2608/goGreen/issues"
+  },
+  "homepage": "https://github.com/fenrir2608/goGreen#readme"
 }
