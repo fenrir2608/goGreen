@@ -16,7 +16,7 @@ Follow these steps to bring your contribution graph to life:
 git clone https://github.com/fenrir2608/goGreen.git
 cd goGreen
 ```
-3. **Set up your project**
+2. **Set up your project**
 Initialize a new Node.js project:
 ```bash
 npm init -y
@@ -29,6 +29,16 @@ You'll need a few modules to get everything running smoothly. Install them all w
 4. **Create your commit script**
 - Create a JavaScript file to manage your commits.
 - Create a JSON file to store all the commit timestamp data.
+
+## Usage
+
+Once you have installed the dependencies, run the script with:
+
+```bash
+node index.js
+```
+
+This will generate 100 random backdated commits spread across the past year and push them to your GitHub repository. Your contribution graph will start filling up with green squares.
 
 ## Room for Improvement
 
