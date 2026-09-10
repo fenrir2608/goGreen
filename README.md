@@ -30,6 +30,16 @@ You'll need a few modules to get everything running smoothly. Install them all w
 - Create a JavaScript file to manage your commits.
 - Create a JSON file to store all the commit timestamp data.
 
+## Usage
+
+Once you have installed the dependencies, run the script with:
+
+```bash
+node index.js
+```
+
+This will generate 100 random backdated commits spread across the past year and push them to your GitHub repository. Your contribution graph will start filling up with green squares.
+
 ## Room for Improvement
 
 So, you've got the basics down. What's next?
