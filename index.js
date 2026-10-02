@@ -1,40 +1,53 @@
-import jsonfile from "jsonfile";
-import moment from "moment";
-import simpleGit from "simple-git";
-import random from "random";
+import { execFileSync } from "node:child_process";
+import { writeFileSync } from "node:fs";
 
-const path = "./data.json";
+import { generateRandomDates } from "./random-dates.js";
 
-const markCommit = (x, y) => {
-  const date = moment()
-    .subtract(1, "y")
-    .add(1, "d")
-    .add(x, "w")
-    .add(y, "d")
-    .format();
+function readPositiveInteger(flag, fallback) {
+  const index = process.argv.indexOf(flag);
+  if (index === -1) return fallback;
 
-  const data = {
-    date: date,
-  };
+  const value = Number(process.argv[index + 1]);
+  if (!Number.isInteger(value) || value <= 0) {
+    throw new TypeError(`${flag} must be followed by a positive integer`);
+  }
+  return value;
+}
 
-  jsonfile.writeFile(path, data, () => {
-    simpleGit().add([path]).commit(date, { "--date": date }).push();
+function git(args, options = {}) {
+  return execFileSync("git", args, {
+    encoding: "utf8",
+    stdio: options.capture ? "pipe" : "inherit",
+    env: { ...process.env, ...options.env },
   });
-};
+}
 
-const makeCommits = (n) => {
-  if(n===0) return simpleGit().push();
-  const x = random.int(0, 54);
-  const y = random.int(0, 6);
-  const date = moment().subtract(1, "y").add(1, "d").add(x, "w").add(y, "d").format();
+const count = readPositiveInteger("--count", 100);
+const days = readPositiveInteger("--days", 365);
+const shouldPush = process.argv.includes("--push");
+const dates = generateRandomDates({ count, days });
 
-  const data = {
-    date: date,
-  };
-  console.log(date);
-  jsonfile.writeFile(path, data, () => {
-    simpleGit().add([path]).commit(date, { "--date": date },makeCommits.bind(this,--n));
+if (!shouldPush) {
+  console.log(dates.map((date) => date.toISOString()).join("\n"));
+  console.log(`\nDry run: ${dates.length} random dates. Add --push to create and push commits.`);
+  process.exit(0);
+}
+
+if (git(["status", "--porcelain"], { capture: true }).trim()) {
+  throw new Error("Working tree must be clean before creating contribution commits");
+}
+
+for (const [index, date] of dates.entries()) {
+  const timestamp = date.toISOString();
+  writeFileSync(
+    "data.json",
+    `${JSON.stringify({ sequence: index + 1, date: timestamp }, null, 2)}\n`,
+  );
+  git(["add", "--", "data.json"]);
+  git(["commit", "-m", `chore: activity ${index + 1}`, "--date", timestamp], {
+    env: { GIT_COMMITTER_DATE: timestamp },
   });
-};
+}
 
-makeCommits(100);
+git(["push"]);
+console.log(`Created and pushed ${dates.length} randomly dated commits.`);

@@ -9,26 +9,22 @@ NodeJs script to make commits to the past (or the future) to go green on GitHub.
 
 ## Getting Started
 
-Follow these steps to bring your contribution graph to life:
+Node.js 18+ and Git are required. No npm dependencies are needed.
 
-1. **Clone this repository**
+Preview 100 unique random dates from the previous 365 completed days:
+
 ```bash
-git clone https://github.com/fenrir2608/goGreen.git
-cd goGreen
+node index.js
 ```
-3. **Set up your project**
-Initialize a new Node.js project:
+
+Create and push the commits only after reviewing the preview:
+
 ```bash
-npm init -y
-  ```
-3. **Install the required npm modules**
-You'll need a few modules to get everything running smoothly. Install them all with:
-  ```bash
-  npm install moment simple-git random
-  ```
-4. **Create your commit script**
-- Create a JavaScript file to manage your commits.
-- Create a JSON file to store all the commit timestamp data.
+node index.js --count 100 --days 365 --push
+```
+
+The working tree must be clean before `--push` is accepted. Each generated commit
+changes only `data.json`, and all commits are pushed after the full batch succeeds.
 
 ## Room for Improvement
 
@@ -38,11 +34,11 @@ So, you've got the basics down. What's next?
 - **Density Control:** Play around with the number of commits per day to adjust the shades of green.
 - **Input Strings:** Convert input strings to X-Y mapped contributions.
 
-## npm Modules Used
+## Tests
 
-- [`moment`](https://www.npmjs.com/package/moment) - Handles date and time manipulation.
-- [`simple-git`](https://www.npmjs.com/package/simple-git) - For easy Git commands.
-- [`random`](https://www.npmjs.com/package/random) - To generate random numbers for the commits.
+```bash
+npm test
+```
 
 ## Credits
 
