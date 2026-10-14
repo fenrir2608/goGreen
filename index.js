@@ -3,38 +3,45 @@ import moment from "moment";
 import simpleGit from "simple-git";
 import random from "random";
 
+const git = simpleGit();
 const path = "./data.json";
 
-const markCommit = (x, y) => {
-  const date = moment()
-    .subtract(1, "y")
-    .add(1, "d")
-    .add(x, "w")
-    .add(y, "d")
+const getRandom2025Date = () => {
+  const dayOffset = random.int(0, 364);
+  const hour = random.int(8, 22);
+  const minute = random.int(0, 59);
+  const second = random.int(0, 59);
+
+  return moment("2025-01-01T00:00:00")
+    .add(dayOffset, "days")
+    .add(hour, "hours")
+    .add(minute, "minutes")
+    .add(second, "seconds")
     .format();
-
-  const data = {
-    date: date,
-  };
-
-  jsonfile.writeFile(path, data, () => {
-    simpleGit().add([path]).commit(date, { "--date": date }).push();
-  });
 };
 
-const makeCommits = (n) => {
-  if(n===0) return simpleGit().push();
-  const x = random.int(0, 54);
-  const y = random.int(0, 6);
-  const date = moment().subtract(1, "y").add(1, "d").add(x, "w").add(y, "d").format();
+const makeCommits = async (totalCommits) => {
+  console.log(`Starting ${totalCommits} commits for year 2025...`);
 
-  const data = {
-    date: date,
-  };
-  console.log(date);
-  jsonfile.writeFile(path, data, () => {
-    simpleGit().add([path]).commit(date, { "--date": date },makeCommits.bind(this,--n));
-  });
+  for (let i = 1; i <= totalCommits; i++) {
+    const date = getRandom2025Date();
+    const data = { date };
+
+    await jsonfile.writeFile(path, data);
+    await git.add([path]);
+    await git.commit(date, { "--date": date });
+
+    if (i % 50 === 0 || i === totalCommits) {
+      console.log(`[${i}/${totalCommits}] Latest commit date: ${date}`);
+    }
+  }
+
+  console.log("All commits created locally. Pushing to origin...");
+  await git.push("origin", "main");
+  console.log("Done! All commits pushed successfully.");
 };
 
-makeCommits(100);
+makeCommits(700).catch((err) => {
+  console.error("Error executing commits:", err);
+});
+
