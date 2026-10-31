@@ -15,5 +15,13 @@
     "moment": "^2.30.1",
     "random": "^4.1.0",
     "simple-git": "^3.25.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UdayaSri0/goGreen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/UdayaSri0/goGreen/issues"
+  },
+  "homepage": "https://github.com/UdayaSri0/goGreen#readme"
 }
